@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace FluentGuards.Primitives
 {
@@ -14,12 +16,22 @@ namespace FluentGuards.Primitives
 
         public TSubject Subject { get; }
 
-        public AndConstraint<TGuards> NotBeNull(string because = "", params object[] becauseArgs)
+        public AndConstraint<TGuards> NotBeNull(string paramName, string because = "", params object[] becauseArgs)
         {
-            // TODO Implement
+            if (this.Subject is null)
+            {
+                throw new ArgumentNullException(paramName);
+            }
 
             return new AndConstraint<TGuards>((TGuards)this);
         }
+
+        //[return: NotNull]
+        //public static T NotBeNull<T>([NotNull] this T? obj, string? message = default, [CallerArgumentExpression("obj")] string? parameterName = default)
+        //where T : class
+        //{
+        //    return obj ?? throw new ArgumentNullException(parameterName, message);
+        //}
 
         /// <summary>
         /// Returns the type of the subject the guard applies on.

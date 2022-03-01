@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace FluentGuards.Primitives
 {
@@ -28,9 +29,12 @@ namespace FluentGuards.Primitives
         /// </summary>
         public Guid? Subject { get; }
 
-        public AndConstraint<TGuards> NotBeEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<TGuards> NotBeEmpty(string paramName, string because = "", params object[] becauseArgs)
         {
-            // TODO Implement
+            if (this.Subject.Equals(Guid.Empty))
+            {
+                throw new ArgumentException("Guid must not be empty!", paramName);
+            }
 
             return new AndConstraint<TGuards>((TGuards)this);
         }

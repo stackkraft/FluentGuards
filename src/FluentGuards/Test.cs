@@ -10,6 +10,8 @@ namespace FluentGuards
     {
         public Test()
         {
+            string s = "1";
+            s.Must().NotBeNullOrWhiteSpace(nameof(s));
         }
     }
 }

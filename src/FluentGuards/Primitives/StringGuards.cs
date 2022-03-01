@@ -1,4 +1,6 @@
-﻿namespace FluentGuards.Primitives
+﻿using System;
+
+namespace FluentGuards.Primitives
 {
     public class StringGuards : StringGuards<StringGuards>
     {
@@ -20,16 +22,22 @@
         {
         }
 
-        public AndConstraint<TGuards> NotBeNullOrEmpty(string because = "", params object[] becauseArgs)
+        public AndConstraint<TGuards> NotBeNullOrEmpty(string paramName, string because = "", params object[] becauseArgs)
         {
-            // TODO Implement
+            if (string.IsNullOrEmpty(this.Subject))
+            {
+                throw new ArgumentException("String must not be null or empty!", paramName);
+            }
 
             return new AndConstraint<TGuards>((TGuards)this);
         }
 
-        public AndConstraint<TGuards> NotBeNullOrWhiteSpace(string because = "", params object[] becauseArgs)
+        public AndConstraint<TGuards> NotBeNullOrWhiteSpace(string paramName, string because = "", params object[] becauseArgs)
         {
-            // TODO Implement
+            if (string.IsNullOrWhiteSpace(this.Subject))
+            {
+                throw new ArgumentException("String must not be null, empty or whitespace!", paramName);
+            }
 
             return new AndConstraint<TGuards>((TGuards)this);
         }

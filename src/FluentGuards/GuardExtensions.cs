@@ -1,10 +1,15 @@
 ﻿using FluentGuards.Primitives;
 using System;
-using System.Collections.Generic;
+
 namespace FluentGuards
 {
     public static class GuardExtensions
     {
+        public static ObjectGuards Must(this object actualValue)
+        {
+            return new ObjectGuards(actualValue);
+        }
+
         public static StringGuards Must(this string actualValue)
         {
             return new StringGuards(actualValue);
